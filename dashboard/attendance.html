@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CPS — Attendance Log</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<div class="app-layout">
+
+  <!-- Sidebar overlay (mobile) -->
+  <div class="sidebar-overlay"></div>
+
+  <!-- ── Sidebar ─────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">CP</div>
+      <span class="logo-text">CPS Dashboard</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Overview</span>
+      <a href="dashboard.html" class="nav-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/></svg>
+        Analytics Hub
+      </a>
+      <a href="attendance.html" class="nav-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Attendance Log
+      </a>
+
+      <span class="nav-section-label" data-admin-only>Admin</span>
+      <a href="#" class="nav-item" data-admin-only>
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Manage Users
+      </a>
+    </nav>
+
+    <div class="sidebar-user">
+      <div class="user-avatar" id="sidebar-user-initials">—</div>
+      <div class="user-info">
+        <div class="name" id="sidebar-user-name">—</div>
+        <div class="role" id="sidebar-user-role">—</div>
+      </div>
+      <button class="logout-btn" id="logout-btn" title="Sign out">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ── Main Content ─────────────────────────────────────── -->
+  <div class="main-content">
+
+    <header class="page-header">
+      <div class="flex items-center gap-2">
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <div class="page-title">Attendance Log</div>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-secondary btn-sm" id="export-btn">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          Export CSV
+        </button>
+      </div>
+    </header>
+
+    <div class="page-body">
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+
+        <!-- Search -->
+        <div class="filter-group" style="flex:2;min-width:200px;">
+          <div class="search-wrap" style="flex:1">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <input
+              type="text"
+              id="filter-search"
+              class="form-control"
+              placeholder="Search student name or ID..."
+            />
+          </div>
+        </div>
+
+        <!-- Course filter -->
+        <div class="filter-group">
+          <label>Course</label>
+          <select id="filter-course" class="form-control">
+            <option value="">All courses</option>
+          </select>
+        </div>
+
+        <!-- Date filter -->
+        <div class="filter-group">
+          <label>Date</label>
+          <input
+            type="date"
+            id="filter-date"
+            class="form-control"
+            max=""
+          />
+        </div>
+
+        <!-- Teacher filter (admin only) -->
+        <div class="filter-group" id="teacher-filter-wrap" style="display:none;">
+          <label>Teacher</label>
+          <select id="filter-teacher" class="form-control">
+            <option value="">All teachers</option>
+          </select>
+        </div>
+
+        <!-- Apply / Reset -->
+        <button class="btn btn-primary btn-sm" id="apply-filter-btn">
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M3 4h18M7 12h10M11 20h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Filter
+        </button>
+
+        <button class="btn btn-secondary btn-sm" id="reset-filter-btn">
+          Reset
+        </button>
+      </div>
+
+      <!-- Table card -->
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">Records</div>
+          <div class="table-info" id="table-info">Loading…</div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Student</th>
+                <th>Student ID</th>
+                <th>Course</th>
+                <th>Teacher</th>
+                <th>Timestamp</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="table-body">
+              <!-- JS-populated -->
+              <tr class="row-skeleton">
+                <td colspan="7">
+                  <div class="skeleton skeleton-text" style="width:100%"></div>
+                </td>
+              </tr>
+              <tr class="row-skeleton">
+                <td colspan="7">
+                  <div class="skeleton skeleton-text" style="width:100%"></div>
+                </td>
+              </tr>
+              <tr class="row-skeleton">
+                <td colspan="7">
+                  <div class="skeleton skeleton-text" style="width:100%"></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <div class="pagination-info" id="pagination-info">—</div>
+          <div class="pagination-controls" id="pagination-controls"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/attendance.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CPS — Sign In</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<div class="login-page">
+
+  <div class="login-card">
+
+    <!-- Logo -->
+    <div class="login-logo">
+      <div class="logo-mark">CP</div>
+      <div class="logo-text">
+        <span class="product">Classroom Presence</span>
+        <span class="tagline">Attendance System</span>
+      </div>
+    </div>
+
+    <!-- Panel -->
+    <div class="login-panel">
+      <h1>Welcome back</h1>
+      <p class="subtitle">Sign in to access your attendance dashboard.</p>
+
+      <!-- Session-expired message -->
+      <div class="alert alert-info" id="session-alert">
+        Your session has expired. Please sign in again.
+      </div>
+
+      <!-- Error alert -->
+      <div class="alert alert-error" id="error-alert"></div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          placeholder="you@school.edu"
+          autocomplete="email"
+          required
+        />
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          placeholder="••••••••"
+          autocomplete="current-password"
+          required
+        />
+      </div>
+
+      <!-- Submit -->
+      <button class="btn btn-primary" id="login-btn" type="button">
+        <span class="btn-label">Sign in</span>
+        <span class="spinner"></span>
+      </button>
+    </div>
+
+    <p class="login-footer">
+      Classroom Presence System &mdash; &copy; 2025
+    </p>
+  </div>
+
+</div>
+
+<script src="js/api.js"></script>
+<script>
+  // ── Redirect if already logged in ──────────────────────────
+  if (API.auth.isLoggedIn()) {
+    window.location.href = 'dashboard.html';
+  }
+
+  // ── Show session-expired banner if redirected ───────────────
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('session') === 'expired') {
+    document.getElementById('session-alert').classList.add('show');
+  }
+
+  // ── Login form logic ────────────────────────────────────────
+  const loginBtn   = document.getElementById('login-btn');
+  const emailInput = document.getElementById('email');
+  const passInput  = document.getElementById('password');
+  const errorAlert = document.getElementById('error-alert');
+
+  function showError(msg) {
+    errorAlert.textContent = msg;
+    errorAlert.classList.add('show');
+  }
+
+  function clearError() {
+    errorAlert.classList.remove('show');
+  }
+
+  async function handleLogin() {
+    clearError();
+    const email    = emailInput.value.trim();
+    const password = passInput.value;
+
+    if (!email || !password) {
+      showError('Please enter your email and password.');
+      return;
+    }
+
+    loginBtn.classList.add('loading');
+    loginBtn.disabled = true;
+
+    try {
+      await API.login(email, password);
+      // Redirect to dashboard on success
+      window.location.href = 'dashboard.html';
+    } catch (err) {
+      showError(err.message || 'Login failed. Please try again.');
+      loginBtn.classList.remove('loading');
+      loginBtn.disabled = false;
+    }
+  }
+
+  loginBtn.addEventListener('click', handleLogin);
+
+  // Allow Enter key to submit
+  [emailInput, passInput].forEach(el => {
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter') handleLogin();
+    });
+  });
+</script>
+
+</body>
+</html>
