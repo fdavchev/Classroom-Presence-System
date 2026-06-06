@@ -5,4 +5,4 @@ Start-Process powershell -ArgumentList "-NoExit", "-Command", "python backend/ru
 # Start the Frontend Dashboard in the current directory
 Write-Host "🚀 Launching Web Dashboard Server on port 5500..." -ForegroundColor Cyan
 cd dashboard
-python -m http.server 5500
+python -m http.server 5500  

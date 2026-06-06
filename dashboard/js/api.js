@@ -12,7 +12,7 @@
 const API = (() => {
 
   // ── Configuration ──────────────────────────────────────────
-  const BASE_URL = 'http://localhost:8000/api/v1';
+  const BASE_URL = 'http://localhost:8000/api';
 
   const TOKEN_KEY   = 'cps_token';
   const ROLE_KEY    = 'cps_role';
@@ -120,10 +120,16 @@ const API = (() => {
    * @returns {{ token, role, name }}
    */
   async function login(email, password) {
-    const data = await post('/auth/login', { email, password });
-    auth.setSession(data.token, data.role, data.name, email);
-    return data;
-  }
+  // Step 1: Firebase login to get ID token
+  const cred = await firebase.auth()
+    .signInWithEmailAndPassword(email, password);
+  const firebaseToken = await cred.user.getIdToken();
+
+  // Step 2: Exchange for CPS server token
+  const data = await post('/login', { firebase_id_token: firebaseToken });
+  auth.setSession(data.server_token, data.role, data.display_name, data.email);
+  return data;
+}
 
   /**
    * POST /auth/logout (optional — clear local session anyway)
@@ -140,17 +146,18 @@ const API = (() => {
    * Role-aware: admin sees all, teacher sees their own
    */
   async function getStatisticsSummary() {
-    return get('/statistics/summary');
-  }
+  return get('/statistics');
+}
+
+async function getAttendanceRecords(filters = {}) {
+  return get('/attendance', filters);
+}
 
   /**
    * GET /attendance/records
    * @param {object} filters - { course, date, teacher_id, search, page }
    * @returns {{ records: [], total_pages: number, current_page: number, total_records: number }}
    */
-  async function getAttendanceRecords(filters = {}) {
-    return get('/attendance/records', filters);
-  }
 
   /**
    * GET /attendance/records/export  (CSV download)

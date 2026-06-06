@@ -68,14 +68,22 @@
     </div>
 
     <p class="login-footer">
-      Classroom Presence System &mdash; &copy; 2025
+      Classroom Presence System &mdash; &copy; 2026
     </p>
   </div>
 
 </div>
 
 <script src="js/api.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
 <script>
+
+  firebase.initializeApp({
+    apiKey: "AIzaSyA7VSSGsot9FQ9RMRH29HdKnTugX2CpmZ0",
+    authDomain: "classroom-presence-system.firebaseapp.com",
+    projectId: "classroom-presence-system"
+  });
   // ── Redirect if already logged in ──────────────────────────
   if (API.auth.isLoggedIn()) {
     window.location.href = 'dashboard.html';
