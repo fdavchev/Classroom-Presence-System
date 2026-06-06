@@ -5,6 +5,7 @@ All services call get_firestore() to get the client.
 """
 
 import os
+from pathlib import Path
 import firebase_admin
 from firebase_admin import credentials, firestore, auth as firebase_auth
 
@@ -17,8 +18,19 @@ def initialize_firebase() -> None:
     if _initialized:
         return
 
-    key_path = os.getenv("FIREBASE_SERVICE_ACCOUNT_KEY", "serviceAccountKey.json")
+    # 1. Grab env variable if it exists
+    env_path = os.getenv("FIREBASE_SERVICE_ACCOUNT_KEY")
+    
+    if env_path:
+        key_path = env_path
+    else:
+        # 2. DYNAMIC FALLBACK PATH: Anchors directly to the backend/ folder
+        # __file__ is classroom-presence-system/backend/utils/firebase.py
+        # .parent is utils/ -> .parent is backend/
+        backend_dir = Path(__file__).resolve().parent.parent
+        key_path = str(backend_dir / "serviceAccountKey.json")
 
+    # 3. Check file existence cleanly
     if not os.path.exists(key_path):
         raise FileNotFoundError(
             f"serviceAccountKey.json not found at '{key_path}'. "
