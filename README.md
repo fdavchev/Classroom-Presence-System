@@ -70,7 +70,7 @@ The API runs on `http://localhost:8000` by default.
 
 Open `dashboard/dashboard.html` in a browser while the backend is running. Teachers can view attendance records per class and session.
 
----g
+---
 
 ## 📦 Requirements
 
