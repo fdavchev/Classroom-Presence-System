@@ -4,8 +4,6 @@ A contactless student attendance system powered by **NFC / HCE (Host Card Emulat
 
 ---
 
----
-
 ## ⚙️ How It Works
 
 1. Student logs in with their university email via **Firebase Authentication**
@@ -14,6 +12,18 @@ A contactless student attendance system powered by **NFC / HCE (Host Card Emulat
 4. The **HCE service** broadcasts the student payload over NFC
 5. The teacher's device reads the data and records attendance
 6. The teacher views live attendance in the **web dashboard**
+
+---
+
+## 🧩 Tech Stack
+
+| Layer     | Technology                              |
+|-----------|-----------------------------------------|
+| Mobile    | Kotlin, Android HCE, Firebase Auth      |
+| Backend   | Python 3.10+, FastAPI, Firebase Admin SDK |
+| Auth      | Firebase Authentication + JWT           |
+| Database  | Firebase Firestore                      |
+| Dashboard | HTML, CSS, JavaScript                   |
 
 ---
 
@@ -53,17 +63,6 @@ For the Android apps, see [Mobile Setup](#-mobile-setup) below.
 
 ---
 
-## 🧩 Tech Stack
-
-| Layer     | Technology                              |
-|-----------|-----------------------------------------|
-| Mobile    | Kotlin, Android HCE, Firebase Auth      |
-| Backend   | Python 3.10+, FastAPI, Firebase Admin SDK |
-| Auth      | Firebase Authentication + JWT           |
-| Database  | Firebase Firestore                      |
-| Dashboard | HTML, CSS, JavaScript                   |
-
----
 
 ## 📦 Prerequisites
 
