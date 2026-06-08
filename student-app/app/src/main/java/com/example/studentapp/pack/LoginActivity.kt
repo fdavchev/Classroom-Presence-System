@@ -2,97 +2,155 @@ package com.example.studentapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
+import com.google.gson.JsonObject
+import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-// ─── Minimal API definitions (only what the student app needs) ───────────────
-
-data class StudentLoginRequest(val email: String, val password: String)
-
-data class StudentLoginResponse(
-    val user_id: String,
+data class StudentLoginRequest(
     val email: String,
-    val role: String,
-    val server_token: String
+    val password: String,
+    val firebase_id_token: String
 )
 
+// Use JsonObject so we can safely read whatever the backend returns
 interface StudentApiService {
-    @POST("login")
-    suspend fun login(@Body request: StudentLoginRequest): retrofit2.Response<StudentLoginResponse>
+    @POST("api/login")
+    suspend fun login(@Body request: StudentLoginRequest): Response<JsonObject>
 }
-
-// ─── The login screen ────────────────────────────────────────────────────────
 
 class LoginActivity : AppCompatActivity() {
 
-    // ⚠️ Must match your computer's IP — same as teacher app
-    private val BASE_URL = "http://YOUR_COMPUTER_IP:8000/api/"
+    // ⚠️  Change this to your actual backend IP and port
+    private val BASE_URL = "http://your ip/8000/"
 
-    private val apiService: StudentApiService by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(StudentApiService::class.java)
-    }
+    private lateinit var etEmail: EditText
+    private lateinit var etPassword: EditText
+    private lateinit var etStudentName: EditText
+    private lateinit var etCourse: EditText
+    private lateinit var btnLogin: Button
+    private lateinit var tvStatus: TextView
+
+    private lateinit var apiService: StudentApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // If already logged in, skip straight to MainActivity
+        val prefs = getSharedPreferences("STUDENT_PREFS", MODE_PRIVATE)
+        if (!prefs.getString("student_id", "").isNullOrEmpty()) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+            return
+        }
+
         setContentView(R.layout.activity_login)
 
-        val etEmail    = findViewById<EditText>(R.id.etEmail)
-        val etPassword = findViewById<EditText>(R.id.etPassword)
-        val etName     = findViewById<EditText>(R.id.etStudentName)
-        val etCourse   = findViewById<EditText>(R.id.etCourse)
-        val btnLogin   = findViewById<Button>(R.id.btnLogin)
-        val tvStatus   = findViewById<TextView>(R.id.tvLoginStatus)
+        etEmail       = findViewById(R.id.etEmail)
+        etPassword    = findViewById(R.id.etPassword)
+        etStudentName = findViewById(R.id.etStudentName)
+        etCourse      = findViewById(R.id.etCourse)
+        btnLogin      = findViewById(R.id.btnLogin)
+        tvStatus      = findViewById(R.id.tvLoginStatus)
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        apiService = retrofit.create(StudentApiService::class.java)
 
         btnLogin.setOnClickListener {
-            val email    = etEmail.text.toString().trim()
-            val password = etPassword.text.toString()
-            val name     = etName.text.toString().trim()
-            val course   = etCourse.text.toString().trim()
+            val email       = etEmail.text.toString().trim()
+            val password    = etPassword.text.toString().trim()
+            val localName   = etStudentName.text.toString().trim()
+            val localCourse = etCourse.text.toString().trim()
 
-            if (email.isEmpty() || password.isEmpty() || name.isEmpty()) {
-                Toast.makeText(this, "Fill in email, password, and name.", Toast.LENGTH_SHORT).show()
+            if (email.isEmpty() || password.isEmpty()) {
+                tvStatus.text = "Please enter both email and password."
                 return@setOnClickListener
             }
 
-            btnLogin.isEnabled = false
             tvStatus.text = "Logging in…"
+            btnLogin.isEnabled = false
 
             lifecycleScope.launch {
-                val result = runCatching {
-                    apiService.login(StudentLoginRequest(email, password))
-                }.getOrNull()
+                try {
+                    // Step 1 – Firebase sign-in
+                    val authResult = FirebaseAuth.getInstance()
+                        .signInWithEmailAndPassword(email, password)
+                        .await()
 
-                if (result?.isSuccessful == true && result.body() != null) {
-                    val body = result.body()!!
+                    val tokenResult = authResult.user?.getIdToken(true)?.await()
+                    val firebaseToken = tokenResult?.token
 
-                    // Save everything to SharedPreferences (the phone's tiny local storage)
-                    // SharedPreferences is like a sticky note — it survives app restarts
-                    val prefs = getSharedPreferences("STUDENT_PREFS", MODE_PRIVATE)
-                    prefs.edit()
-                        .putString("student_id",    body.user_id)   // Firebase UID
-                        .putString("student_name",  name)
-                        .putString("course_enrolled", course)
-                        .putString("auth_token",    body.user_id)   // same UID = proof of identity
-                        .apply()
+                    if (firebaseToken == null) {
+                        tvStatus.text = "Firebase token generation failed."
+                        btnLogin.isEnabled = true
+                        return@launch
+                    }
 
-                    // Go to the main "ready to tap" screen
-                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                    finish() // close this screen so Back button doesn't return here
-                } else {
-                    tvStatus.text = "Login failed. Check credentials and server."
+                    // Step 2 – Call your backend
+                    val response = apiService.login(
+                        StudentLoginRequest(email, password, firebaseToken)
+                    )
+
+                    Log.d("LOGIN_DEBUG", "HTTP ${response.code()}: ${response.body()}")
+
+                    if (response.isSuccessful && response.body() != null) {
+                        val json = response.body()!!
+
+                        // Grab student_id — try common field names the backend might use
+                        val studentId = listOf("user_id", "student_id", "studentId", "uid", "id")
+                            .firstNotNullOfOrNull { key ->
+                                json.get(key)?.takeIf { !it.isJsonNull }?.asString?.takeIf { it.isNotEmpty() }
+                            }
+
+                        if (studentId == null) {
+                            Log.e("LOGIN_DEBUG", "Backend response has no student_id. Full body: $json")
+                            tvStatus.text = "Login error: server did not return a student ID.\nCheck Logcat → LOGIN_DEBUG for details."
+                            btnLogin.isEnabled = true
+                            return@launch
+                        }
+
+                        // Grab optional fields gracefully
+                        val serverToken = json.get("token")?.takeIf { !it.isJsonNull }?.asString ?: ""
+                        val role        = json.get("role")?.takeIf { !it.isJsonNull }?.asString ?: ""
+
+                        prefs.edit().apply {
+                            putString("student_id",      studentId)
+                            putString("student_name",    localName.ifEmpty { "Registered Student" })
+                            putString("course_enrolled", localCourse.ifEmpty { "Mobile Course" })
+                            putString("auth_token",      serverToken.ifEmpty { studentId })
+                            putString("role",            role)
+                            apply()
+                        }
+
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        finish()
+
+                    } else {
+                        val errorMsg = response.errorBody()?.string() ?: "No error body"
+                        Log.e("LOGIN_DEBUG", "Backend rejected login: $errorMsg")
+                        tvStatus.text = "Login failed (${response.code()}): $errorMsg"
+                        btnLogin.isEnabled = true
+                    }
+
+                } catch (e: Exception) {
+                    Log.e("LOGIN_DEBUG", "Exception during login", e)
+                    tvStatus.text = "Error: ${e.localizedMessage}"
                     btnLogin.isEnabled = true
                 }
             }

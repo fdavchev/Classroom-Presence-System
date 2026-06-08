@@ -1,0 +1,41 @@
+com.example.studentapp-jetified-lifecycle-viewmodel-savedstate-2.7.0-0 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\054b35ec92e916ec7f2f18e4c355500d\workspace\transformed\jetified-lifecycle-viewmodel-savedstate-2.7.0\res
+com.example.studentapp-jetified-annotation-experimental-1.3.0-1 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\127ab01615a62dcb997cef5352fe033d\workspace\transformed\jetified-annotation-experimental-1.3.0\res
+com.example.studentapp-fragment-1.3.6-2 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\1946018e7349c03c7d26ffa7fe89f314\workspace\transformed\fragment-1.3.6\res
+com.example.studentapp-jetified-startup-runtime-1.1.1-3 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\1c60d1c12e73ad653fa1e9ccbd7614e4\workspace\transformed\jetified-startup-runtime-1.1.1\res
+com.example.studentapp-lifecycle-livedata-2.7.0-4 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\3356071dc353f8aae68a228accb46cfa\workspace\transformed\lifecycle-livedata-2.7.0\res
+com.example.studentapp-lifecycle-viewmodel-2.7.0-5 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\3b9690c2ac5f68e1606294c889b1f6e7\workspace\transformed\lifecycle-viewmodel-2.7.0\res
+com.example.studentapp-jetified-play-services-basement-18.1.0-6 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\42148d405efc10f4c1666cb8d83a07f6\workspace\transformed\jetified-play-services-basement-18.1.0\res
+com.example.studentapp-jetified-core-ktx-1.12.0-7 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\51eef9654636f20d04cb48fd61141e78\workspace\transformed\jetified-core-ktx-1.12.0\res
+com.example.studentapp-jetified-viewpager2-1.0.0-8 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\52d332c6ff6efc6a2be06a96a96ee503\workspace\transformed\jetified-viewpager2-1.0.0\res
+com.example.studentapp-jetified-savedstate-1.2.1-9 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\535d49b3617a0582bcdf7548d3c6aa30\workspace\transformed\jetified-savedstate-1.2.1\res
+com.example.studentapp-jetified-emoji2-views-helper-1.2.0-10 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\5a4fec8a4d8eb3d390d9e8d9d6cc5faf\workspace\transformed\jetified-emoji2-views-helper-1.2.0\res
+com.example.studentapp-jetified-lifecycle-process-2.7.0-11 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\5e45d0405c0cef68d485136d4493e011\workspace\transformed\jetified-lifecycle-process-2.7.0\res
+com.example.studentapp-appcompat-1.6.1-12 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\6f00c8bec54fa200fc3e3039de5cbba4\workspace\transformed\appcompat-1.6.1\res
+com.example.studentapp-lifecycle-livedata-core-2.7.0-13 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\722e12101544246aaeadd5352532db3d\workspace\transformed\lifecycle-livedata-core-2.7.0\res
+com.example.studentapp-core-1.12.0-14 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\7a716e96a74cf4277a43700415ff56a2\workspace\transformed\core-1.12.0\res
+com.example.studentapp-core-runtime-2.2.0-15 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\8c47c4baf3fffd5959b9c04b44c28884\workspace\transformed\core-runtime-2.2.0\res
+com.example.studentapp-jetified-lifecycle-runtime-ktx-2.7.0-16 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\8e97b8014932101310cebc71310cb714\workspace\transformed\jetified-lifecycle-runtime-ktx-2.7.0\res
+com.example.studentapp-jetified-emoji2-1.2.0-17 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\92f580efee20bfa3d835cf6e9ba5da14\workspace\transformed\jetified-emoji2-1.2.0\res
+com.example.studentapp-drawerlayout-1.1.1-18 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\94b5ebd6c6a4b439732f76c75189e402\workspace\transformed\drawerlayout-1.1.1\res
+com.example.studentapp-jetified-activity-1.8.0-19 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\9591a78b01cc63d9a54802270d540977\workspace\transformed\jetified-activity-1.8.0\res
+com.example.studentapp-lifecycle-runtime-2.7.0-20 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\977564f0427c30c019d792c15ebedf53\workspace\transformed\lifecycle-runtime-2.7.0\res
+com.example.studentapp-transition-1.2.0-21 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\97968dac6298a1b13f658fca46ba4dd4\workspace\transformed\transition-1.2.0\res
+com.example.studentapp-jetified-firebase-common-20.4.2-22 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\9a13e709578a2adeb7dd3d534be3ce8a\workspace\transformed\jetified-firebase-common-20.4.2\res
+com.example.studentapp-material-1.11.0-23 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\a26fed787125fb9b5824848a6dba9c58\workspace\transformed\material-1.11.0\res
+com.example.studentapp-browser-1.4.0-24 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\bdf350d0699dbf8d8f35cfbbb1bdc67d\workspace\transformed\browser-1.4.0\res
+com.example.studentapp-jetified-lifecycle-livedata-core-ktx-2.7.0-25 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\bfbd31aae6af87ab298de2025e325348\workspace\transformed\jetified-lifecycle-livedata-core-ktx-2.7.0\res
+com.example.studentapp-cardview-1.0.0-26 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\cda93d715cbe4ae5ae3a70d988e6ca7d\workspace\transformed\cardview-1.0.0\res
+com.example.studentapp-jetified-appcompat-resources-1.6.1-27 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\de81d12d02d084fda6b8695eda7ffbce\workspace\transformed\jetified-appcompat-resources-1.6.1\res
+com.example.studentapp-recyclerview-1.1.0-28 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\e3ed90ff12e7978000caacce01a81824\workspace\transformed\recyclerview-1.1.0\res
+com.example.studentapp-coordinatorlayout-1.1.0-29 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\e7dbf5abc704afd8d1787e8a9aef5e95\workspace\transformed\coordinatorlayout-1.1.0\res
+com.example.studentapp-jetified-profileinstaller-1.3.0-30 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\ec2e7c80d9d7f85a0a475fd6c3671ca3\workspace\transformed\jetified-profileinstaller-1.3.0\res
+com.example.studentapp-jetified-play-services-base-18.0.1-31 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\f08b472428c8a2be81dc3382b31cabbf\workspace\transformed\jetified-play-services-base-18.0.1\res
+com.example.studentapp-constraintlayout-2.1.4-32 C:\Users\Davchev\.gradle\caches\9.3.1\transforms\f5bfd13fc5e5852c34eda55126a1cd1f\workspace\transformed\constraintlayout-2.1.4\res
+com.example.studentapp-pngs-33 C:\Users\Davchev\Desktop\Fakultet\semestar8\Razvoj na moblini app\Classroom Presence System (CPS)\student-app\app\build\generated\res\pngs\debug
+com.example.studentapp-res-34 C:\Users\Davchev\Desktop\Fakultet\semestar8\Razvoj na moblini app\Classroom Presence System (CPS)\student-app\app\build\generated\res\processDebugGoogleServices
+com.example.studentapp-resValues-35 C:\Users\Davchev\Desktop\Fakultet\semestar8\Razvoj na moblini app\Classroom Presence System (CPS)\student-app\app\build\generated\res\resValues\debug
+com.example.studentapp-packageDebugResources-36 C:\Users\Davchev\Desktop\Fakultet\semestar8\Razvoj na moblini app\Classroom Presence System (CPS)\student-app\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.example.studentapp-packageDebugResources-37 C:\Users\Davchev\Desktop\Fakultet\semestar8\Razvoj na moblini app\Classroom Presence System (CPS)\student-app\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.example.studentapp-debug-38 C:\Users\Davchev\Desktop\Fakultet\semestar8\Razvoj na moblini app\Classroom Presence System (CPS)\student-app\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.example.studentapp-debug-39 C:\Users\Davchev\Desktop\Fakultet\semestar8\Razvoj na moblini app\Classroom Presence System (CPS)\student-app\app\src\debug\res
+com.example.studentapp-main-40 C:\Users\Davchev\Desktop\Fakultet\semestar8\Razvoj na moblini app\Classroom Presence System (CPS)\student-app\app\src\main\res

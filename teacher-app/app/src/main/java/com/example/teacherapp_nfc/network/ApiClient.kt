@@ -13,7 +13,7 @@ object ApiClient {
     //   Mac/Linux → ifconfig (look for "inet" on your Wi-Fi)
     // Example: "http://192.168.1.42:8000/api/"
     // Both phones must be on the SAME Wi-Fi network as your computer.
-    private const val BASE_URL = "http://192.168.0.173:8000/api/"
+    private const val BASE_URL = "BuildConfig.BASE_URL"
 
     // This is where we store the login token after the teacher logs in.
     // It starts empty — nobody is logged in yet.

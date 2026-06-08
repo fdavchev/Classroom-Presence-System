@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:padding="24dp"
-    tools:context=".MainActivity">
+    android:padding="24dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:orientation="vertical">
 
         <TextView
@@ -20,6 +17,7 @@
             android:text="@string/login_title"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
+        <!-- LOGIN SECTION: only email + password -->
         <EditText
             android:id="@+id/emailInput"
             android:layout_width="match_parent"
@@ -38,20 +36,30 @@
             android:hint="@string/password_hint"
             android:inputType="textPassword" />
 
-        <EditText
-            android:id="@+id/classInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="@string/class_hint"
-            android:inputType="textCapWords" />
-
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/login_button" />
+
+        <!-- SESSION SECTION: class name typed AFTER login -->
+        <EditText
+            android:id="@+id/classInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="@string/class_hint"
+            android:inputType="textCapWords"
+            android:enabled="false" />
+
+        <Button
+            android:id="@+id/startSessionButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Start Session"
+            android:enabled="false" />
 
         <TextView
             android:id="@+id/sessionText"
@@ -66,14 +74,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@string/sync_button" />
+            android:text="@string/sync_button"
+            android:enabled="false" />
 
         <Button
             android:id="@+id/endSessionButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@string/end_session_button" />
+            android:text="@string/end_session_button"
+            android:enabled="false" />
 
         <TextView
             android:id="@+id/statusText"

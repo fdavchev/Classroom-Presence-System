@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">56667141434</string>
+    <string name="google_api_key" translatable="false">AIzaSyDwkswJU9QIWqXfNlaIwnhIxZxFJI8j-x4</string>
+    <string name="google_app_id" translatable="false">1:56667141434:android:1bf36b0a4dde1866d30c03</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDwkswJU9QIWqXfNlaIwnhIxZxFJI8j-x4</string>
+    <string name="google_storage_bucket" translatable="false">classroom-presence-system.firebasestorage.app</string>
+    <string name="project_id" translatable="false">classroom-presence-system</string>
+</resources>

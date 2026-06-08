@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.legacy.kapt)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -8,7 +9,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.teacherapp_nfc"
+        applicationId = "com.cps.teacherapp"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
@@ -27,6 +28,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")

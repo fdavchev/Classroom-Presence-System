@@ -7,9 +7,9 @@ import retrofit2.http.POST
 // ─── Step 1: Login ──────────────────────────────────────────────────────────
 // This matches POST /api/login in the backend.
 // We send the teacher's email + password and get back a token.
+// NEW
 data class LoginRequest(
-    val email: String,
-    val password: String
+    val firebase_id_token: String
 )
 
 data class LoginResponse(

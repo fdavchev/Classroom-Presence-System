@@ -18,21 +18,21 @@ class AttendanceRepository(
     // Calls POST /api/login with the teacher's email and password.
     // If it works, saves the token into ApiClient so future requests are auth'd.
     // Returns the LoginResponse on success, or null if something went wrong.
-    suspend fun loginTeacher(email: String, password: String): LoginResponse? {
-        val response = runCatching {
-            nfcApiService.login(LoginRequest(email = email, password = password))
-        }.getOrNull()
+    suspend fun loginTeacher(firebaseToken: String): LoginResponse? {
+    val response = runCatching {
+        nfcApiService.login(LoginRequest(firebase_id_token = firebaseToken))
+    }.getOrNull()
 
-        return if (response?.isSuccessful == true) {
-            val body = response.body()
-            if (body != null) {
-                ApiClient.setToken(body.server_token) // 🔑 save the badge
-            }
-            body
-        } else {
-            null
+    return if (response?.isSuccessful == true) {
+        val body = response.body()
+        if (body != null) {
+            ApiClient.setToken(body.server_token)
         }
+        body
+    } else {
+        null
     }
+}
 
     // ── Session management ───────────────────────────────────────────────────
     suspend fun startSession(teacherId: String, className: String): AttendanceSession {

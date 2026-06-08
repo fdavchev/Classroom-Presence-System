@@ -1,4 +1,37 @@
-serviceAccountKey.json
+# ===== SECRETS =====
+local.properties
 .env
-firebase-config.js.
-/build
+google-services.json
+serviceAccountKey.json
+
+# ===== PYTHON / BACKEND =====
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+*.log
+
+# ===== ANDROID =====
+.gradle/
+/build/
+app/build/
+*.jks
+*.keystore
+*.iml
+.idea/
+.DS_Store
+captures/
+.externalNativeBuild/
+.cxx/
+
+# ===== NODE / DASHBOARD =====
+node_modules/
+npm-debug.log*
+
+# ===== GRADLE WRAPPER =====
+gradle/wrapper/gradle-wrapper.jar
+
+dashboard/assets/get_token.html

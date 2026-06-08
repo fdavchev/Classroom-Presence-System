@@ -1,6 +1,8 @@
 package com.example.studentapp
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -12,30 +14,34 @@ class MainActivity : AppCompatActivity() {
 
         val tvStatus      = findViewById<TextView>(R.id.tvStatus)
         val tvStudentInfo = findViewById<TextView>(R.id.tvStudentInfo)
+        val btnLogout     = findViewById<Button>(R.id.btnLogout)   // add this button to your layout if you don't have it
 
-        // Read the student's info that was saved during login
         val prefs      = getSharedPreferences("STUDENT_PREFS", MODE_PRIVATE)
-        val studentId  = prefs.getString("student_id", "") ?: ""
-        val name       = prefs.getString("student_name", "") ?: ""
+        val studentId  = prefs.getString("student_id",      "") ?: ""
+        val name       = prefs.getString("student_name",    "") ?: ""
         val course     = prefs.getString("course_enrolled", "") ?: ""
-        val authToken  = prefs.getString("auth_token", "") ?: ""
+        val authToken  = prefs.getString("auth_token",      "") ?: ""
 
+        // Guard — should never trigger now, but kept as safety net
         if (studentId.isEmpty()) {
-            // Something went wrong — no login data found
-            tvStatus.text = "Error: not logged in. Please restart the app."
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
             return
         }
 
-        // Build the JSON payload that the teacher's phone will receive.
-        // This exact format is what the backend's NfcPayload schema expects.
+        // Build HCE payload
         val payload = """{"student_id":"$studentId","student_name":"$name","course_enrolled":"$course","auth_token":"$authToken","version":"1.0"}"""
-
-        // Write it to the shared HceService variable.
-        // From this moment on, any NFC scan will return this data.
         HceService.studentPayload = payload
 
-        // Show the student's info on screen
+        // Show student info
         tvStudentInfo.text = "👤  $name\n🆔  $studentId\n📚  $course"
-        tvStatus.text = "✅  Ready — hold phone near teacher's device to check in"
+        tvStatus.text      = "✅  Ready — hold phone near teacher's device to check in"
+
+        // Logout button — clears saved data and goes back to login
+        btnLogout.setOnClickListener {
+            prefs.edit().clear().apply()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
     }
 }
