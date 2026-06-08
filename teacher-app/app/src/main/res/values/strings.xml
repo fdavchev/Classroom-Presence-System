@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Teacherapp-NFC</string>
+    <string name="login_title">Teacher NFC Login</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="class_hint">Class name</string>
+    <string name="login_button">Login</string>
+    <string name="login_required">Login to activate NFC scanning.</string>
+    <string name="nfc_ready">NFC scanning is active. Tap an NDEF tag.</string>
+    <string name="nfc_missing">This device does not support NFC.</string>
+    <string name="nfc_disabled">NFC is disabled in system settings.</string>
+    <string name="no_tag">No NFC tag scanned yet.</string>
+    <string name="session_inactive">Attendance session not active.</string>
+    <string name="session_active">Session active for %1$s, teacher %2$s.</string>
+    <string name="sync_idle">No sync activity yet.</string>
+    <string name="sync_button">Sync pending records</string>
+    <string name="end_session_button">End Session</string>
+    <string name="sync_no_session">Start a session before syncing.</string>
+    <string name="sync_result">Synced %1$d record(s).</string>
+    <string name="student_registered">Student registered.</string>
+    <string name="tap_saved_synced">Saved and synced: %1$s (%2$s)</string>
+    <string name="tap_saved_local">Saved locally: %1$s (%2$s)</string>
+</resources>
