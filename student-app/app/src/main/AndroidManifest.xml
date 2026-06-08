@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Allow the app to use NFC hardware -->
+    <uses-permission android:name="android.permission.NFC" />
+    <!-- Allow the app to connect to the internet (for login) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Require NFC — phones without NFC cannot install this app -->
+    <uses-feature android:name="android.hardware.nfc" android:required="true" />
+    <!-- Require HCE (Host Card Emulation) — the feature that makes the phone act as a card -->
+    <uses-feature android:name="android.hardware.nfc.hce" android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+
+        <!-- LoginActivity is the FIRST screen that opens when the app starts -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- MainActivity is the "ready to tap" screen shown after login -->
+        <activity android:name=".MainActivity" />
+
+        <!-- HceService is NOT a screen — it runs silently in the background.
+             When the teacher's phone scans, this service wakes up and responds.
+             The permission here protects it — only Android's NFC system can call it. -->
+        <service
+            android:name=".HceService"
+            android:exported="true"
+            android:permission="android.permission.BIND_NFC_SERVICE">
+            <intent-filter>
+                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
+            </intent-filter>
+            <!-- Points to the AID config file that tells Android WHICH NFC readers
+                 this app responds to (only our teacher app's AID) -->
+            <meta-data
+                android:name="android.nfc.cardemulation.host_apdu_service"
+                android:resource="@xml/apduservice" />
+        </service>
+
+    </application>
+</manifest>

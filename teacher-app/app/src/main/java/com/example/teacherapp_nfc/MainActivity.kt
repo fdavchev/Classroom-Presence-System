@@ -100,18 +100,44 @@ class MainActivity : AppCompatActivity() {
         handleNfcIntent(intent)
     }
 
-    private fun login() {
-        val email = emailInput.text.toString().trim()
-        val password = passwordInput.text.toString()
-        val className = classInput.text.toString().trim()
+   private fun login() {
+    val email = emailInput.text.toString().trim()
+    val password = passwordInput.text.toString()
+    val className = classInput.text.toString().trim()
 
-        if (email.isBlank() || password.isBlank() || className.isBlank()) {
-            Toast.makeText(this, "Enter email and password.", Toast.LENGTH_SHORT).show()
-            return
+    if (email.isBlank() || password.isBlank() || className.isBlank()) {
+        Toast.makeText(this, "Fill in all three fields.", Toast.LENGTH_SHORT).show()
+        return
+    }
+
+    // Disable the button while we wait for the server to respond.
+    findViewById<Button>(R.id.loginButton).isEnabled = false
+    statusText.text = "Logging in…"
+
+    lifecycleScope.launch {
+        // Call the backend. This is the real login — not just saving email locally.
+        val loginResult = repository.loginTeacher(email, password)
+
+        if (loginResult == null) {
+            // Something went wrong — wrong password, server not running, etc.
+            Toast.makeText(
+                this@MainActivity,
+                "Login failed. Check your credentials and that the server is running.",
+                Toast.LENGTH_LONG
+            ).show()
+            statusText.text = "Login failed."
+            findViewById<Button>(R.id.loginButton).isEnabled = true
+            return@launch
         }
 
-        teacherId = email
+        // Login worked! Now save who the teacher is and start the session.
+        teacherId = loginResult.user_id
         passwordInput.text.clear()
+        activeSession = repository.startSession(loginResult.email, className)
+        renderState()
+        syncNow()
+    }
+}
 
         lifecycleScope.launch {
             activeSession = repository.startSession(email, className)
