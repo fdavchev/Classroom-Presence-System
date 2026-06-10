@@ -34,7 +34,7 @@ interface StudentApiService {
 class LoginActivity : AppCompatActivity() {
 
     // ⚠️  Change this to your actual backend IP and port
-    private val BASE_URL = "http://your ip/8000/"
+    private val BASE_URL = "http://YOUR_IP/8000/"
 
     private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
